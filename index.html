@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ElectroShop - Electronics Store</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <div class="brand" aria-label="ElectroShop">
+      <span class="bolt">⚡</span>
+      <span>ElectroShop</span>
+    </div>
+
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><button id="aboutBtn" aria-haspopup="dialog" aria-controls="aboutModal">About</button></li>
+      <li><button id="cartBtn" aria-haspopup="dialog" aria-controls="cartModal">Cart (<span
+            id="cartCount">0</span>)</button></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Welcome to ElectroShop</h1>
+    <p>Your one-stop shop for mobiles, gadgets, gaming and more!</p>
+    <button class="cta-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop
+      Now</button>
+    <div style="margin-top:12px;" class="offer-banner">🎉 Festival Offer: Flat 15% off on all Smartwatches! Use code:
+      FEST15</div>
+  </header>
+
+  <div class="carousel" id="carousel" aria-hidden="false" role="region" aria-label="Featured products">
+    <div class="carousel-controls" aria-hidden="true">
+      <button aria-label="Previous product" onclick="slideCarousel(-1)">&lt;</button>
+      <button aria-label="Next product" onclick="slideCarousel(1)">&gt;</button>
+    </div>
+    <div id="carouselProduct" class="carousel-product"></div>
+  </div>
+
+  <div class="search-bar" role="search" aria-label="Product search">
+    <input id="searchInput" type="text" placeholder="Search products..." aria-label="Search products">
+    <button onclick="searchProducts()" aria-label="Search">Search</button>
+  </div>
+
+  <div class="filters-bar" aria-hidden="false">
+    <label for="priceRange">Price below: ₹<span id="priceRangeVal">500000</span></label>
+    <input id="priceRange" type="range" min="1000" max="500000" step="1000" value="500000"
+      onchange="filterByPrice(this.value)" aria-label="Price range">
+    <span style="opacity:0.6;">&nbsp;|&nbsp;</span>
+    <select id="sortSelect" onchange="sortProducts(this.value)" aria-label="Sort products">
+      <option value="relevance">Sort: Relevance</option>
+      <option value="lowhigh">Price: Low to High</option>
+      <option value="highlow">Price: High to Low</option>
+    </select>
+  </div>
+
+  <div class="category-bar" id="categoryBar" role="navigation" aria-label="Product categories"></div>
+
+  <section id="products" aria-labelledby="products-heading">
+    <h2 id="products-heading">All Products</h2>
+    <div class="product-grid" id="productGrid" role="list"></div>
+  </section>
+
+  <section id="faq" class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is ElectroShop?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>ElectroShop is your one-stop online store for gadgets, mobiles, and electronics accessories. We deliver
+          top-quality tech at the best prices!</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I order?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Browse your favorite items, add them to your cart, and proceed to checkout in just a few clicks!</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What payment methods do you accept?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We accept Credit/Debit Cards, UPI, Net Banking, and popular wallets for a smooth and secure checkout
+          experience.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Can I track my order?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes! Once your order is shipped, you’ll receive a tracking link to monitor delivery progress in real time.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is your return policy?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>You can request a return or replacement within 7 days of delivery for eligible products.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="aboutModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <div class="modal-content about-section" role="document">
+      <button class="close" onclick="closeModal('aboutModal')" aria-label="Close">&times;</button>
+      <h2 id="aboutTitle">About ElectroShop</h2>
+      <p>
+        <b>ElectroShop</b> is dedicated to providing top electronics at unbeatable prices.
+        From powerful smartphones and laptops to the trendiest gadgets, we offer a premium catalog curated with
+        care.<br><br>
+        Founded by passionate techies in 2025, we believe in honest pricing, fast delivery, and real support.
+      </p>
+      <p>
+        <b>Contact:</b> <a href="mailto:support@electroshop.com">support@electroshop.com</a><br>
+        <b>Phone:</b> +91-800-111-2222<br>
+      </p>
+    </div>
+  </div>
+
+  <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+    <div class="modal-content" role="document">
+      <button class="close" onclick="closeModal('productModal')" aria-label="Close">&times;</button>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
+
+  <div id="cartModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="modal-content" role="document">
+      <button class="close" onclick="closeModal('cartModal')" aria-label="Close">&times;</button>
+      <h2 id="cartTitle">Your Cart</h2>
+      <div id="cartItems" aria-live="polite"></div>
+      <div id="cartTotal"></div>
+      <div style="margin-top:12px;">
+        <button id="checkoutBtn" class="shopbtn" onclick="checkout()" style="display:none;">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Contact: support@electroshop.com</div>
+    <div>ElectroShop &copy; 2025</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
